@@ -58,6 +58,10 @@ const Dashboard = () => {
   }
 
   const getIncomeList = async () => {
+
+    if (!user?.user?.primaryEmailAddress?.emailAddress) {
+      return;
+  }
     try {
       const result = await db
         .select({
@@ -67,7 +71,8 @@ const Dashboard = () => {
           ),
         })
         .from(Incomes)
-        .groupBy(Incomes.id);
+        .groupBy(Incomes.id).where(eq(Incomes.createdBy, user?.user?.primaryEmailAddress?.emailAddress))
+        ;
 
       setIncomeList(result);
     } catch (error) {
