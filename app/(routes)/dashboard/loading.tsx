@@ -2,7 +2,7 @@
 
 const loading = () => {
   return (
-    <div>loading</div>
+    <div className="text-center h-screen flex items-center">loading...</div>
   )
 }
 

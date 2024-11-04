@@ -9,16 +9,12 @@ import React, { useState } from "react";
 import { toast } from "sonner";
 
 
-interface AddExpenseProps {
-  budgetId: number | string;
-  user: { id: string; email: string }; 
-  refreshData: () => void;
-}
 
-const AddExpense: React.FC<AddExpenseProps> = ({ budgetId, user, refreshData }) => {
-  const [name, setName] = useState<string | undefined>();
-  const [amount, setAmount] = useState<string | undefined>();
-  const [loading, setLoading] = useState<boolean>(false);
+
+const AddExpense = ({ budgetId, user, refreshData }) => {
+  const [name, setName] = useState();
+  const [amount, setAmount] = useState();
+  const [loading, setLoading] = useState(false);
 
   const addNewExpense = async () => {
   setLoading(true);

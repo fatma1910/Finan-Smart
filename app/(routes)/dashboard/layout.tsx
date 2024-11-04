@@ -27,9 +27,9 @@ function DashboardLayout ({children} : any) {
         .select()
         .from(Budgets)
         .where(eq(Budgets.createdBy, user?.primaryEmailAddress?.emailAddress));
-        console.log(result);
+        console.log( 'check user budget' + result);
         if (result?.length == 0) {
-        // router.replace("/dashboard/budgets");
+        router.replace("/dashboard/budgets");
         }
     };
     return (

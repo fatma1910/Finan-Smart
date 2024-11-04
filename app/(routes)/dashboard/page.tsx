@@ -22,7 +22,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     user && getBudgetList();
-  }, [user]);
+  }, [user.isSignedIn]);
   
   const getBudgetList = async () => {
 

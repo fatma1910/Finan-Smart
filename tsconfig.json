@@ -22,6 +22,6 @@
     },
     "noEmitOnError": false
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/(routes)/dashboard/budgets/_components/CreateBudget.jsx", "app/(routes)/dashboard/expenses/_components/AddExpensense.jsx", "app/(routes)/dashboard/expenses/[id]/page.jsx", "app/(routes)/dashboard/incomes/_components/CreateIncomes.jsx"],
   "exclude": ["node_modules"]
 }

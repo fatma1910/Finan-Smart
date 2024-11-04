@@ -2,7 +2,7 @@
 
 import { CardInfoProps } from "@/types";
 import formatNumber from "@/utils";
-// import getFinancialAdvice from "@/utils/getFinancialAdvice";
+import getFinancialAdvice from "@/utils/getFinancialAdvice";
 import {
   PiggyBank,
   ReceiptText,
@@ -19,47 +19,44 @@ const CardInfo = ({ budgetList, incomeList }:CardInfoProps) => {
     const [financialAdvice, setFinancialAdvice] = useState("");
 
     useEffect(() => {
-        if (budgetList?.length > 0 || incomeList?.length > 0) {
+      if (budgetList.length > 0 || incomeList.length > 0) {
         CalculateCardInfo();
-        }
+      }
     }, [budgetList, incomeList]);
-
-
+  
     useEffect(() => {
-        // if (totalBudget > 0 || totalIncome > 0 || totalSpend > 0) {
-        //   const fetchFinancialAdvice = async () => {
-        //     const advice = await getFinancialAdvice(
-        //       totalBudget,
-        //       totalIncome,
-        //       totalSpend
-        //     );
-        //     setFinancialAdvice(advice);
-        //   };
-    
-        //   fetchFinancialAdvice();
-        // }
+      if (totalBudget > 0 || totalIncome > 0 || totalSpend > 0) {
+        const fetchFinancialAdvice = async () => {
+          const advice = await getFinancialAdvice(
+            totalBudget,
+            totalIncome,
+            totalSpend
+          );
+          setFinancialAdvice(advice || '');
+        };
+  
+        fetchFinancialAdvice();
+      }
     }, [totalBudget, totalIncome, totalSpend]);
-
-
-
+  
     const CalculateCardInfo = () => {
-        console.log(budgetList);
-        let totalBudget_ = 0;
-        let totalSpend_ = 0;
-        let totalIncome_ = 0;
-    
-        budgetList.forEach((element) => {
+      console.log(budgetList);
+      let totalBudget_ = 0;
+      let totalSpend_ = 0;
+      let totalIncome_ = 0;
+  
+      budgetList.forEach((element) => {
         totalBudget_ = totalBudget_ + Number(element.amount);
         totalSpend_ = totalSpend_ + element.totalSpend;
-        });
-    
-        incomeList.forEach((element) => {
+      });
+  
+      incomeList.forEach((element) => {
         totalIncome_ = totalIncome_ + element.totalAmount;
-        });
-    
-        setTotalIncome(totalIncome_);
-        setTotalBudget(totalBudget_);
-        setTotalSpend(totalSpend_);
+      });
+  
+      setTotalIncome(totalIncome_);
+      setTotalBudget(totalBudget_);
+      setTotalSpend(totalSpend_);
     };
     
     
@@ -67,7 +64,7 @@ const CardInfo = ({ budgetList, incomeList }:CardInfoProps) => {
     
   return (
     <div>
-        {budgetList?.length === 0 ? (
+        {budgetList?.length > 0 ? (
             <div>
                 <div className="p-7 mt-4 rounded-2xl flex items-center justify-between">
                     <div>
