@@ -18,10 +18,7 @@ import { useUser } from "@clerk/nextjs";
 import { toast } from "sonner";
 import { db } from "@/utils/dpConfig";
 
-// Define the props type
-// interface CreateIncomesProps {
-//   refreshData: () => void;
-// }
+
 
 function CreateIncomes({ refreshData }) {
   const [emojiIcon, setEmojiIcon] = useState("😀");
@@ -36,7 +33,7 @@ function CreateIncomes({ refreshData }) {
    * Used to Create New Budget
    */
   const onCreateIncomes = async () => {
-    if (!user?.primaryEmailAddress?.emailAddress) return; // Ensure user email is available
+    if (!user?.primaryEmailAddress?.emailAddress) return; 
     const result = await db
       .insert(Incomes)
       .values({

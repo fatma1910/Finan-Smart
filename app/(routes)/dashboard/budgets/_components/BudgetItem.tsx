@@ -1,16 +1,9 @@
 
+import { BudgetItem } from "@/types";
 import Link from "next/link";
 import React from "react";
 
-interface BudgetItem{
-    totalSpend: number;
-    totalItem: number;
-    id: number;
-    name: string;
-    amount: any;
-    icon: string | null;
-    createdBy: string;
-}
+
 
 interface Budget {
     budget : BudgetItem;

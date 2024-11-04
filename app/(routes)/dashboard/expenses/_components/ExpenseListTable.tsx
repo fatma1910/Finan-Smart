@@ -1,20 +1,14 @@
+import { ExpensesItem } from "@/types";
 import { db } from "@/utils/dpConfig";
 import { Expenses } from "@/utils/schema";
 import { eq } from "drizzle-orm";
-import { Trash } from "lucide-react";
 import React from "react";
 import { toast } from "sonner";
 
 
-interface Expense {
-  id: number;
-  name: string;
-  amount: string;
-  createdAt: string;
-}
 
 interface ExpenseListTableProps {
-  expensesList: Expense[]; 
+  expensesList: ExpensesItem[]; 
   refreshData: () => void; 
 }
 
@@ -22,7 +16,7 @@ const ExpenseListTable: React.FC<ExpenseListTableProps> = ({
   expensesList,
   refreshData,
 }) => {
-  const deleteExpense = async (expense: Expense) => {
+  const deleteExpense = async (expense: ExpensesItem) => {
     const result = await db
       .delete(Expenses)
       .where(eq(Expenses.id, expense.id))
@@ -57,12 +51,6 @@ const ExpenseListTable: React.FC<ExpenseListTableProps> = ({
           >
             Delete
           </h2>
-          {/* <h2>
-            <Trash
-              className="text-red-500 cursor-pointer"
-              onClick={() => deleteExpense(expenses)}
-            />
-          </h2> */}
         </div>
       ))}
     </div>

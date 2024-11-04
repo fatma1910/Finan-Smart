@@ -10,7 +10,7 @@ export interface BudgetItem {
     totalItem: number;
     id: number;
     name: string;
-    amount: number|string;
+    amount: any;
     icon: string | null;
     createdBy: string;
 }
@@ -30,3 +30,11 @@ export interface IncomesItem  {
     icon: string | null;
     createdBy: string;
 }
+
+export interface BudgetInfo {
+    id: number;
+    name: string;
+    amount: number;
+    icon: string | null;
+  }
+  

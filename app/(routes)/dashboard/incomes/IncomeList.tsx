@@ -7,15 +7,14 @@ import { db } from "@/utils/dpConfig";
 import CreateIncomes from "./_components/CreateIncomes";
 import IncomeItem from "./_components/IncomeItem";
 
-// Define types for income information
 interface Income {
-    totalSpend: number;
-    totalItem: number;
-    id: number;
-    name: string;
-    amount: string;
-    icon: string | null;
-    createdBy: string;
+  totalSpend: number;
+  totalItem: number;
+  id: number;
+  name: string;
+  amount: string;
+  icon: string | null;
+  createdBy: string;
 }
 
 function IncomeList() {
@@ -40,7 +39,7 @@ function IncomeList() {
       })
       .from(Incomes)
       .leftJoin(Expenses, eq(Incomes.id, Expenses.budgetId))
-      .where(eq(Incomes.createdBy, user?.primaryEmailAddress?.emailAddress))
+      .where(eq(Incomes.createdBy, user.primaryEmailAddress.emailAddress))
       .groupBy(Incomes.id)
       .orderBy(desc(Incomes.id));
 
@@ -52,8 +51,12 @@ function IncomeList() {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
         <CreateIncomes refreshData={() => getIncomelist()} />
         {incomelist.length > 0
-          ? incomelist.map((income, index) => (
-              <IncomeItem budget={income} key={income.id} />
+          ? incomelist.map((income) => (
+              <IncomeItem
+                budget={income}
+                key={income.id}
+                refreshData={getIncomelist} // Pass refreshData function
+              />
             ))
           : [1, 2, 3, 4, 5].map((item, index) => (
               <div

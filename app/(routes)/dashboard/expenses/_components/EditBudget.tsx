@@ -19,14 +19,9 @@ import { Budgets } from "@/utils/schema";
 import { eq } from "drizzle-orm";
 import { toast } from "sonner";
 import { db } from "@/utils/dpConfig";
+import { BudgetInfo } from "@/types";
 
 
-interface BudgetInfo {
-  id: number;
-  name: string;
-  amount: number;
-  icon: string | null;
-}
 
 interface EditBudgetProps {
   budgetInfo: BudgetInfo;

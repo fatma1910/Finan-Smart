@@ -25,29 +25,7 @@ import EditBudget from "../_components/EditBudget";
 import { db } from "@/utils/dpConfig";
 import AddExpense from "../_components/AddExpensense";
 
-// Define types for budget and expense information
-// interface BudgetInfo {
-//   id: string;
-//   name: string;
-//   amount: number;
-//   createdBy: string;
-//   icon: string;
-//   totalSpend: number;
-//   totalItem: number;
-// }
 
-// interface Expense {
-//   id: string;
-//   budgetId: string;
-//   amount: number;
-//   createdAt: string; // Adjust type based on your actual schema
-// }
-
-// interface ExpensesScreenProps {
-//   params: {
-//     id: string; // Budget ID
-//   };
-// }
 
 function ExpensesScreen({ params }) {
   const { user } = useUser();
@@ -94,7 +72,6 @@ function ExpensesScreen({ params }) {
       .where(eq(Expenses.budgetId, params.id))
       .orderBy(desc(Expenses.id));
     setExpensesList(result);
-    console.log("expenses list result " + result);
   };
 
   /**
