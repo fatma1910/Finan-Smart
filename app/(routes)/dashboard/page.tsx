@@ -7,8 +7,9 @@ import { desc, eq, getTableColumns, sql } from "drizzle-orm";
 import { Budgets, Expenses, Incomes } from "@/utils/schema";
 import { BudgetItem, ExpensesItem, IncomesItem } from "@/types";
 import BarChartDashboard from "./_components/BarChartDashboard";
-import BudgetItems from "./budgets/_components/BudgetItem";
+
 import ExpenseListTable from "./expenses/_components/ExpenseListTable";
+import BudgetItems from "./budgets/_components/BudgetItem";
 
 
 

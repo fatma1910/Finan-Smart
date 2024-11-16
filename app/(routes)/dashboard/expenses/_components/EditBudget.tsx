@@ -19,14 +19,10 @@ import { Budgets } from "@/utils/schema";
 import { eq } from "drizzle-orm";
 import { toast } from "sonner";
 import { db } from "@/utils/dpConfig";
-import { BudgetInfo } from "@/types";
+import { EditBudgetProps } from "@/types";
 
 
 
-interface EditBudgetProps {
-  budgetInfo: BudgetInfo;
-  refreshData: () => void;
-}
 
 const EditBudget: React.FC<EditBudgetProps> = ({ budgetInfo, refreshData }) => {
   const [emojiIcon, setEmojiIcon] = useState<string | null>(budgetInfo?.icon);

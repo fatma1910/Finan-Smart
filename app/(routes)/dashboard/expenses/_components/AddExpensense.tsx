@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { AddExpenseProps } from "@/types";
 import { db } from "@/utils/dpConfig";
 
 import { Budgets, Expenses } from "@/utils/schema";
@@ -10,46 +11,44 @@ import { toast } from "sonner";
 
 
 
-
-const AddExpense = ({ budgetId, user, refreshData }) => {
-  const [name, setName] = useState();
-  const [amount, setAmount] = useState();
-  const [loading, setLoading] = useState(false);
+const AddExpense: React.FC<AddExpenseProps> = ({ budgetId, user, refreshData }) => {
+  const [name, setName] = useState<string>("");
+  const [amount, setAmount] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
 
   const addNewExpense = async () => {
-  setLoading(true);
-  
-  const parsedAmount = Number(amount); 
-  const createdAt = moment().format("DD/MM/yyyy");
-
-  try {
-
-    const result = await db
-      .insert(Expenses)
-      .values({
-        name: name || "", 
-        amount: parsedAmount, 
-        budgetId: budgetId,
-        createdAt: createdAt,
-        createdBy: user?.id || "", 
-      })
-      .returning({ insertedId: Expenses.id });
-
-    setAmount("");
-    setName("");
     
-    if (result) {
-      refreshData(); 
-      toast("New Expense Added!");
-    }
-  } catch (error) {
-    console.error("Error adding new expense:", error);
-    toast.error("Failed to add expense");
-  } finally {
-    setLoading(false); 
-  }
-};
+    setLoading(true);
 
+    const parsedAmount =amount.toString(); 
+    const createdAt = moment().format("DD/MM/yyyy");
+
+    try {
+      const result = await db
+        .insert(Expenses)
+        .values({
+          name:name, 
+          amount: parsedAmount, 
+          budgetId: Number(budgetId),
+          createdAt:createdAt,
+          createdBy: user?.id || "", 
+        })
+        .returning({ insertedId: Expenses.id });
+
+      setAmount("");
+      setName("");
+
+      if (result) {
+        refreshData(); 
+        toast("New Expense Added!");
+      }
+    } catch (error) {
+      console.error("Error adding new expense:", error);
+      toast.error("Failed to add expense");
+    } finally {
+      setLoading(false); 
+    }
+  };
 
   return (
     <div className="border p-5 rounded-2xl">

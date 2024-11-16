@@ -13,41 +13,46 @@ import {
 import EmojiPicker from "emoji-picker-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-
-import { Budgets } from "@/utils/schema";
+import { Incomes } from "@/utils/schema";
 import { useUser } from "@clerk/nextjs";
 import { toast } from "sonner";
 import { db } from "@/utils/dpConfig";
 
+interface CreateIncomesProps {
+  refreshData: () => void; 
+}
 
+const CreateIncomes: React.FC<CreateIncomesProps> = ({ refreshData }) => {
+  const [emojiIcon, setEmojiIcon] = useState<string>("😀");
+  const [openEmojiPicker, setOpenEmojiPicker] = useState<boolean>(false);
 
-function CreateBudget({ refreshData }) {
-  const [emojiIcon, setEmojiIcon] = useState("😀"); 
-  const [openEmojiPicker, setOpenEmojiPicker] = useState(false);
-  const [name, setName] = useState();
-  const [amount, setAmount] = useState(); 
+  const [name, setName] = useState<string> ("");
+  const [amount, setAmount] = useState<number | undefined>();
 
   const { user } = useUser();
 
-  
-  const onCreateBudget = async () => {
-    
-    const numericAmount = typeof amount === "string" ? parseFloat(amount) : amount;
+
+  /**
+   * Used to Create New Budget
+   */
+  const onCreateIncomes = async () => {
+    if (!name || amount === undefined || !user?.primaryEmailAddress?.emailAddress) {
+      return;
+    }
 
     const result = await db
-      .insert(Budgets)
+      .insert(Incomes)
       .values({
         name: name,
-        amount: numericAmount,
-        createdBy: user?.primaryEmailAddress?.emailAddress,
+        amount: amount.toString(),
+        createdBy: user.primaryEmailAddress.emailAddress,
         icon: emojiIcon,
-
       })
-      .returning({ insertedId: Budgets.id });
+      .returning({ insertedId: Incomes.id });
 
     if (result) {
       refreshData();
-      toast("New Budget Created!");
+      toast("New Income Source Created!");
     }
   };
 
@@ -61,12 +66,12 @@ function CreateBudget({ refreshData }) {
             cursor-pointer hover:shadow-md"
           >
             <h2 className="text-3xl">+</h2>
-            <h2>Create New Budget</h2>
+            <h2>Create New Income Source</h2>
           </div>
         </DialogTrigger>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Create New Budget</DialogTitle>
+            <DialogTitle>Create New Income Source</DialogTitle>
             <DialogDescription>
               <div className="mt-5">
                 <Button
@@ -86,18 +91,18 @@ function CreateBudget({ refreshData }) {
                   />
                 </div>
                 <div className="mt-2">
-                  <h2 className="text-black font-medium my-1">Budget Name</h2>
+                  <h2 className="text-black font-medium my-1">Source Name</h2>
                   <Input
-                    placeholder="e.g. Home Decor"
+                    placeholder="e.g. Youtube"
                     onChange={(e) => setName(e.target.value)}
                   />
                 </div>
                 <div className="mt-2">
-                  <h2 className="text-black font-medium my-1">Budget Amount</h2>
+                  <h2 className="text-black font-medium my-1">Monthly Amount</h2>
                   <Input
                     type="number"
                     placeholder="e.g. 5000$"
-                    onChange={(e) => setAmount(e.target.value)}
+                    onChange={(e) => setAmount(Number(e.target.value))}
                   />
                 </div>
               </div>
@@ -107,10 +112,10 @@ function CreateBudget({ refreshData }) {
             <DialogClose asChild>
               <Button
                 disabled={!(name && amount)}
-                onClick={() => onCreateBudget()}
+                onClick={() => onCreateIncomes()}
                 className="mt-5 w-full rounded-full"
               >
-                Create Budget
+                Create Income Source
               </Button>
             </DialogClose>
           </DialogFooter>
@@ -120,4 +125,4 @@ function CreateBudget({ refreshData }) {
   );
 }
 
-export default CreateBudget;
+export default CreateIncomes;

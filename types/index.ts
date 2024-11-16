@@ -38,3 +38,15 @@ export interface BudgetInfo {
     icon: string | null;
   }
   
+export interface AddExpenseProps {
+    budgetId: number; 
+    user: {
+      id: string; 
+    };
+    refreshData: () => void; 
+  }
+
+export interface EditBudgetProps {
+    budgetInfo: BudgetInfo;
+    refreshData: () => void;
+  }
